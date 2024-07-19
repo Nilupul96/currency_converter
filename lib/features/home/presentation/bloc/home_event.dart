@@ -8,3 +8,9 @@ abstract class HomeEvent extends Equatable {
 }
 
 class FetchCurrencyList extends HomeEvent {}
+
+class SetSelectedCurrencyList extends HomeEvent {
+  final List<String> currencyCodeList;
+
+  const SetSelectedCurrencyList(this.currencyCodeList);
+}

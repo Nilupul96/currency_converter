@@ -10,4 +10,12 @@ class HomeRepositoryImpl implements HomeRepository {
   Future<Result> fetchCurrencyList() async {
     return await _homeService.fetchCurrencyList();
   }
+
+  @override
+  Future<Result> convertCurrency(
+      {required String baseCurrency,
+      required List<String> convertCurrencyCodes}) async {
+    return await _homeService.convertCurrency(
+        baseCurrency: baseCurrency, convertCurrencyCodes: convertCurrencyCodes);
+  }
 }

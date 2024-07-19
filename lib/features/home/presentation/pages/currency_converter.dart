@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-
 import '../../../../core/app_colors.dart';
 import '../../../../core/helpers/app_logger.dart';
 import '../bloc/home_bloc.dart';
@@ -24,6 +23,20 @@ class _CurrencyConverterScreenState extends State<CurrencyConverterScreen> {
   final _formKey = GlobalKey<FormState>();
   final _currencyController = TextEditingController();
 
+  convertCurrency(List<String> currencyList) {
+    context.read<HomeBloc>().add(ConvertCurrency(currencyList, "USD"));
+  }
+
+  double getRate(String code, HomeSuccess state) {
+    try {
+      return state.currencyRates
+          .firstWhere((element) => element.currencyCode == code)
+          .rate;
+    } catch (e) {
+      return 1.0;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,85 +46,98 @@ class _CurrencyConverterScreenState extends State<CurrencyConverterScreen> {
       body: BlocConsumer<HomeBloc, HomeState>(listener: (context, state) {
         Log.info(state.toString());
       }, builder: (context, state) {
-        if (state is HomeError) {
-          return Center(
-            child: Text(state.error),
-          );
-        }
-        if (state is HomeSuccess) {
-          return Form(
-            key: _formKey,
-            child: SingleChildScrollView(
-              physics: const AlwaysScrollableScrollPhysics(),
-              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20.w),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    const RSizedBox(
-                      height: 40,
-                    ),
-                    Text(
-                      'Insert Amount:',
-                      textAlign: TextAlign.left,
-                      style: Theme.of(context).textTheme.displayMedium,
-                    ),
-                    const RSizedBox(
-                      height: 10,
-                    ),
-                    CustomTextFormField(
-                      labelText: "Amount",
-                      keyboardType: TextInputType.number,
-                      textEditingController: _currencyController,
-                      hintText: "Please Insert Amount",
-                    ),
-                    const RSizedBox(
-                      height: 40,
-                    ),
-                    Text(
-                      'Convert To:',
-                      textAlign: TextAlign.left,
-                      style: Theme.of(context).textTheme.displayMedium,
-                    ),
-                    const RSizedBox(
-                      height: 10,
-                    ),
-                    if (state.selectedCurrencyCode.isEmpty)
-                      RSizedBox(
-                          height: 100,
-                          child: Center(
-                              child: Text(
-                                  "No selected converters ${state.selectedCurrencyCode}"))),
+        return Form(
+          key: _formKey,
+          child: SingleChildScrollView(
+            physics: const AlwaysScrollableScrollPhysics(),
+            keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.w),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  const RSizedBox(
+                    height: 40,
+                  ),
+                  Text(
+                    'Insert Amount:',
+                    textAlign: TextAlign.left,
+                    style: Theme.of(context).textTheme.displayMedium,
+                  ),
+                  const RSizedBox(
+                    height: 10,
+                  ),
+                  CustomTextFormField(
+                    labelText: "Amount",
+                    keyboardType: TextInputType.number,
+                    textEditingController: _currencyController,
+                    hintText: "Please Insert Amount",
+                  ),
+                  const RSizedBox(
+                    height: 40,
+                  ),
+                  Text(
+                    'Convert To:',
+                    textAlign: TextAlign.left,
+                    style: Theme.of(context).textTheme.displayMedium,
+                  ),
+                  const RSizedBox(
+                    height: 10,
+                  ),
+                  if (state is HomeSuccess &&
+                      state.selectedCurrencyCode.isEmpty)
+                    RSizedBox(
+                        height: 100,
+                        child: Center(
+                            child: Text(
+                                "No selected converters ${state.selectedCurrencyCode}"))),
+                  if (state is HomeSuccess)
                     ListView.builder(
                         itemCount: state.selectedCurrencyCode.length,
                         shrinkWrap: true,
                         physics: const ClampingScrollPhysics(),
                         itemBuilder: (BuildContext context, int index) {
-                          return const ConvertedCurrencyListTile();
+                          return ConvertedCurrencyListTile(
+                            value:
+                                "${double.parse(_currencyController.text.trim()) * getRate(state.selectedCurrencyCode[index], state)}",
+                          );
                         }),
-                    const RSizedBox(
-                      height: 20,
+                  const RSizedBox(
+                    height: 20,
+                  ),
+                  Center(
+                    child: SizedBox(
+                      width: 200.w,
+                      child: MainBtn(
+                          lbl: "Add Converter",
+                          bgColor: AppColors.lightGreen.withOpacity(0.4),
+                          icon: const Icon(Icons.add),
+                          onClick: () async {
+                            context.pushNamed(CurrencyListScreen.routeName);
+                          }),
                     ),
+                  ),
+                  const RSizedBox(
+                    height: 20,
+                  ),
+                  if (state is HomeSuccess)
                     Center(
                       child: SizedBox(
                         width: 200.w,
                         child: MainBtn(
-                            lbl: "Add Converter",
+                            lbl: "Convert",
                             bgColor: AppColors.lightGreen.withOpacity(0.4),
                             icon: const Icon(Icons.add),
                             onClick: () async {
-                              context.pushNamed(CurrencyListScreen.routeName);
+                              convertCurrency(state.selectedCurrencyCode);
                             }),
                       ),
                     )
-                  ],
-                ),
+                ],
               ),
             ),
-          );
-        }
-        return SizedBox();
+          ),
+        );
       }),
     );
   }

@@ -4,7 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/widgets/main_text_field.dart';
 
 class ConvertedCurrencyListTile extends StatelessWidget {
-  const ConvertedCurrencyListTile({super.key});
+  final String value;
+  const ConvertedCurrencyListTile({super.key, required this.value});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +18,7 @@ class ConvertedCurrencyListTile extends StatelessWidget {
               labelText: "",
               keyboardType: TextInputType.number,
               textEditingController: TextEditingController(),
-              hintText: "",
+              hintText: value,
               readOnly: true,
             ),
           ),

@@ -14,3 +14,10 @@ class SetSelectedCurrencyList extends HomeEvent {
 
   const SetSelectedCurrencyList(this.currencyCodeList);
 }
+
+class ConvertCurrency extends HomeEvent {
+  final List<String> currencyCodeList;
+  final String baseCurrency;
+
+  const ConvertCurrency(this.currencyCodeList, this.baseCurrency);
+}

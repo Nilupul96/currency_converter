@@ -41,8 +41,23 @@ class AppTheme {
               color: AppColors.white,
               fontSize: 14.sp)),
       inputDecorationTheme: InputDecorationTheme(
-          fillColor: AppColors.black,
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(16))));
+          fillColor: AppColors.grey,
+          filled: true,
+          focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(16),
+              borderSide: BorderSide(color: AppColors.lightGreen)),
+          enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(16),
+              borderSide: BorderSide(color: AppColors.grey)),
+          border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(16),
+              borderSide: BorderSide(color: AppColors.grey)),
+          focusedErrorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(16),
+              borderSide: BorderSide(color: AppColors.red)),
+          errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: BorderSide(color: AppColors.red))));
 
   static TextTheme textTheme() => TextTheme(
       displayLarge: TextStyle(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../../../core/app_const.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../bloc/home_bloc.dart';
 import '../widgets/currency_list_tile.dart';
 
 class CurrencyListScreen extends StatefulWidget {
@@ -17,12 +18,20 @@ class _CurrencyListScreenState extends State<CurrencyListScreen> {
         appBar: AppBar(
           title: const Text('Currency List'),
         ),
-        body: ListView.builder(
-            itemCount: AppConst.AVAILABLE_CURRENCY_CODE_LIST.length,
-            itemBuilder: (context, int index) {
-              return CurrencyListTile(
-                currency: AppConst.AVAILABLE_CURRENCY_CODE_LIST[index],
-              );
-            }));
+        body: BlocConsumer<HomeBloc, HomeState>(
+          listener: (context, state) {},
+          builder: (context, state) {
+            if (state is HomeSuccess) {
+              return ListView.builder(
+                  itemCount: state.currencyList.length,
+                  itemBuilder: (context, int index) {
+                    return CurrencyListTile(
+                      currency: state.currencyList[index],
+                    );
+                  });
+            }
+            return const SizedBox();
+          },
+        ));
   }
 }

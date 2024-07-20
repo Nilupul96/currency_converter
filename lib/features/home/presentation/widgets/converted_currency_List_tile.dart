@@ -30,7 +30,7 @@ class _ConvertedCurrencyListTileState extends State<ConvertedCurrencyListTile>
 
   @override
   void dispose() {
-    controller.dispose();
+    // controller.dispose();
     _controller.dispose();
     super.dispose();
   }

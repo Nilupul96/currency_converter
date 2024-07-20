@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import '../../../../core/helpers/app_logger.dart';
 import '../bloc/home_bloc.dart';
 import '../widgets/currency_list_tile.dart';
@@ -48,7 +49,11 @@ class _CurrencyListScreenState extends State<CurrencyListScreen> {
           ],
         ),
         body: BlocConsumer<HomeBloc, HomeState>(
-          listener: (context, state) {},
+          listener: (context, state) {
+            if (state is HomeSuccess) {
+              context.pop();
+            }
+          },
           builder: (context, state) {
             if (state is HomeSuccess) {
               return ListView.builder(

@@ -35,4 +35,3 @@ class HomeError extends HomeState {
 
 class CurrencyConverting extends HomeState {}
 
-class FetchCurrencyRatesLoading extends HomeState {}

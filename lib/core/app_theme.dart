@@ -24,23 +24,32 @@ class AppTheme {
       appBarTheme: AppBarTheme(
           backgroundColor: AppColors.black,
           centerTitle: true,
-          titleTextStyle:
-              TextStyle(fontWeight: FontWeight.w700, fontSize: 16.sp)),
+          titleTextStyle: TextStyle(
+            fontWeight: FontWeight.w600,
+            fontSize: 18.sp,
+            fontFamily: 'Montserrat',
+          )),
       bottomNavigationBarTheme:
           BottomNavigationBarThemeData(backgroundColor: AppColors.black),
       textTheme: TextTheme(
           displayLarge: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: AppColors.white,
-              fontSize: 20.sp),
+            fontWeight: FontWeight.bold,
+            color: AppColors.white,
+            fontSize: 20.sp,
+            fontFamily: 'Montserrat',
+          ),
           displayMedium: TextStyle(
-              fontWeight: FontWeight.w700,
-              color: AppColors.white,
-              fontSize: 16.sp),
+            fontWeight: FontWeight.w500,
+            color: AppColors.white,
+            fontSize: 18.sp,
+            fontFamily: 'Montserrat',
+          ),
           displaySmall: TextStyle(
-              fontWeight: FontWeight.w400,
-              color: AppColors.white,
-              fontSize: 14.sp)),
+            fontWeight: FontWeight.w400,
+            color: AppColors.white,
+            fontSize: 16.sp,
+            fontFamily: 'Montserrat',
+          )),
       inputDecorationTheme: InputDecorationTheme(
           fillColor: AppColors.grey,
           filled: true,
@@ -68,13 +77,13 @@ class AppTheme {
         fontFamily: 'Montserrat',
       ),
       displayMedium: TextStyle(
-        fontWeight: FontWeight.w700,
+        fontWeight: FontWeight.w500,
         fontSize: 16.sp,
         fontFamily: 'Montserrat',
       ),
       displaySmall: TextStyle(
         fontWeight: FontWeight.w400,
-        fontSize: 14.sp,
+        fontSize: 16.sp,
         fontFamily: 'Montserrat',
       ));
 

@@ -36,7 +36,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           currencyList: result.result,
           selectedCurrencyCode: selectedCurrencyList ?? [],
           baseCurrency: baseCurrency,
-          currencyRates: []));
+          currencyRates: const []));
     }
   }
 

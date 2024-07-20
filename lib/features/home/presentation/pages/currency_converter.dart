@@ -54,6 +54,12 @@ class _CurrencyConverterScreenState extends State<CurrencyConverterScreen> {
   }
 
   @override
+  void dispose() {
+    _currencyController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(

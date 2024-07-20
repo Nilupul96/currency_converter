@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomTextFormField extends StatefulWidget {
   final String labelText;
@@ -64,9 +65,12 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
       textInputAction: widget.textInputAction,
       readOnly: widget.readOnly,
       minLines: widget.minLines,
-      maxLines: widget.maxLines,
+      maxLines: null,
       inputFormatters: widget.inputFormatter,
-      style: Theme.of(context).textTheme.labelMedium,
+      style: Theme.of(context)
+          .textTheme
+          .displayMedium!
+          .copyWith(fontWeight: FontWeight.w400, fontSize: 16.sp),
       maxLength: widget.maxLength,
       autovalidateMode: widget.autovalidateMode,
       decoration: InputDecoration(

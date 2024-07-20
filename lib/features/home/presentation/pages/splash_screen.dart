@@ -45,7 +45,7 @@ class _SplashScreenState extends State<SplashScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image.asset(AppAssets.logo),
-              RSizedBox(height: 30),
+              const RSizedBox(height: 30),
               Center(
                 child: Text("Currency converter",
                     style: TextStyle(

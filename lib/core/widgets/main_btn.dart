@@ -36,7 +36,8 @@ class _MainBtnState extends State<MainBtn> {
       height: 50.h,
       child: ElevatedButton(
           style: ElevatedButton.styleFrom(
-            primary: !widget.isEnabled ? AppColors.lightGreen : widget.bgColor,
+            backgroundColor:
+                !widget.isEnabled ? AppColors.lightGreen : widget.bgColor,
             elevation: 0.0,
             splashFactory: widget.disableSplash
                 ? NoSplash.splashFactory

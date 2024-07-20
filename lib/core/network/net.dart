@@ -155,7 +155,7 @@ class Net {
     request.headers.addAll(headers);
     fields ??= {};
     fields!.forEach((key, value) {
-      request.fields['$key'] = value;
+      request.fields[key] = value;
     });
     imagePathList ??= {};
     List<dynamic> data = imagePathList!.entries.cast().toList();

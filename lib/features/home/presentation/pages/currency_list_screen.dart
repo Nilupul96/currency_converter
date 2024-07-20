@@ -1,7 +1,5 @@
-import 'package:currency_converter/core/widgets/progress_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import '../../../../core/helpers/app_logger.dart';
 import '../bloc/home_bloc.dart';
 import '../widgets/currency_list_tile.dart';
@@ -17,11 +15,10 @@ class CurrencyListScreen extends StatefulWidget {
 
 class _CurrencyListScreenState extends State<CurrencyListScreen> {
   List<String> selectedCurrencyList = [];
-  late ProgressDialog _progressDialog;
+
   @override
   void initState() {
     setInitialSelectedCurrency();
-    _progressDialog = ProgressDialog(context);
     super.initState();
   }
 
@@ -51,18 +48,7 @@ class _CurrencyListScreenState extends State<CurrencyListScreen> {
           ],
         ),
         body: BlocConsumer<HomeBloc, HomeState>(
-          listener: (context, state) {
-            if (state is FetchCurrencyRatesLoading) {
-              _progressDialog.show();
-            }
-            if (state is HomeSuccess) {
-              _progressDialog.hide();
-              context.pop();
-            }
-            if (state is HomeError) {
-              _progressDialog.hide();
-            }
-          },
+          listener: (context, state) {},
           builder: (context, state) {
             if (state is HomeSuccess) {
               return ListView.builder(

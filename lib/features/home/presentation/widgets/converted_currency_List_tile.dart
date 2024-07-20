@@ -26,8 +26,18 @@ class ConvertedCurrencyListTile extends StatefulWidget {
 class _ConvertedCurrencyListTileState extends State<ConvertedCurrencyListTile>
     with SingleTickerProviderStateMixin {
   late final controller = SlidableController(this);
+  final _controller = TextEditingController();
+
+  @override
+  void dispose() {
+    controller.dispose();
+    _controller.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
+    _controller.text = widget.value;
     return Padding(
         padding: EdgeInsets.only(bottom: 20.h),
         child: Slidable(
@@ -53,7 +63,7 @@ class _ConvertedCurrencyListTileState extends State<ConvertedCurrencyListTile>
                 child: CustomTextFormField(
                     labelText: "",
                     keyboardType: TextInputType.number,
-                    textEditingController: TextEditingController(),
+                    textEditingController: _controller,
                     hintText: widget.value,
                     readOnly: true,
                     suffixIcon: CountryPickerComponent(

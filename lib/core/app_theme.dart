@@ -20,35 +20,72 @@ class AppTheme {
       useMaterial3: true,
       scaffoldBackgroundColor: AppColors.black,
       iconTheme: const IconThemeData(color: Colors.white),
+      fontFamily: 'Montserrat',
       appBarTheme: AppBarTheme(
           backgroundColor: AppColors.black,
           centerTitle: true,
-          titleTextStyle:
-              TextStyle(fontWeight: FontWeight.w700, fontSize: 16.sp)),
+          titleTextStyle: TextStyle(
+            fontWeight: FontWeight.w600,
+            fontSize: 18.sp,
+            fontFamily: 'Montserrat',
+          )),
       bottomNavigationBarTheme:
           BottomNavigationBarThemeData(backgroundColor: AppColors.black),
       textTheme: TextTheme(
           displayLarge: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: AppColors.white,
-              fontSize: 20.sp),
+            fontWeight: FontWeight.bold,
+            color: AppColors.white,
+            fontSize: 20.sp,
+            fontFamily: 'Montserrat',
+          ),
           displayMedium: TextStyle(
-              fontWeight: FontWeight.w700,
-              color: AppColors.white,
-              fontSize: 16.sp),
+            fontWeight: FontWeight.w500,
+            color: AppColors.white,
+            fontSize: 18.sp,
+            fontFamily: 'Montserrat',
+          ),
           displaySmall: TextStyle(
-              fontWeight: FontWeight.w400,
-              color: AppColors.white,
-              fontSize: 14.sp)),
+            fontWeight: FontWeight.w400,
+            color: AppColors.white,
+            fontSize: 16.sp,
+            fontFamily: 'Montserrat',
+          )),
       inputDecorationTheme: InputDecorationTheme(
-          fillColor: AppColors.black,
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(16))));
+          fillColor: AppColors.grey,
+          filled: true,
+          focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(16),
+              borderSide: BorderSide(color: AppColors.lightGreen)),
+          enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(16),
+              borderSide: BorderSide(color: AppColors.grey)),
+          border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(16),
+              borderSide: BorderSide(color: AppColors.grey)),
+          focusedErrorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(16),
+              borderSide: BorderSide(color: AppColors.red)),
+          errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: BorderSide(color: AppColors.red))));
 
   static TextTheme textTheme() => TextTheme(
       displayLarge: TextStyle(
-          fontWeight: FontWeight.bold, color: Colors.black, fontSize: 20.sp),
-      displayMedium: TextStyle(fontWeight: FontWeight.w700, fontSize: 16.sp),
-      displaySmall: TextStyle(fontWeight: FontWeight.w400, fontSize: 14.sp));
+        fontWeight: FontWeight.bold,
+        color: Colors.black,
+        fontSize: 20.sp,
+        fontFamily: 'Montserrat',
+      ),
+      displayMedium: TextStyle(
+        fontWeight: FontWeight.w500,
+        fontSize: 16.sp,
+        fontFamily: 'Montserrat',
+      ),
+      displaySmall: TextStyle(
+        fontWeight: FontWeight.w400,
+        fontSize: 16.sp,
+        fontFamily: 'Montserrat',
+      ));
 
   static AppBarTheme appBarTheme() => AppBarTheme(
       backgroundColor: Colors.white,

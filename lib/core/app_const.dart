@@ -1,6 +1,77 @@
 // ignore_for_file: constant_identifier_names
 
-
 class AppConst {
-  static const String SAMPLE_CONST = "";
+  static const String API_KEY =
+      'fca_live_YNjFldcjhKItLTt534wU4AtMMQ6NHASKMO4YyBLc';
+  static const String INITIAL_CURRENCY_CODE = 'USD';
+  static Map<String, String> CURRENCY_TO_COUNTRY = {
+    "EUR": "FR",
+    "USD": "US",
+    "JPY": "JP",
+    "BGN": "BG",
+    "CZK": "CZ",
+    "DKK": "DK",
+    "GBP": "GB",
+    "HUF": "HU",
+    "PLN": "PL",
+    "RON": "RO",
+    "SEK": "SE",
+    "CHF": "CH",
+    "ISK": "IS",
+    "NOK": "NO",
+    "HRK": "HR",
+    "RUB": "RU",
+    "TRY": "TR",
+    "AUD": "AU",
+    "BRL": "BR",
+    "CAD": "CA",
+    "CNY": "CN",
+    "HKD": "HK",
+    "IDR": "ID",
+    "ILS": "IL",
+    "INR": "IN",
+    "KRW": "KR",
+    "MXN": "MX",
+    "MYR": "MY",
+    "NZD": "NZ",
+    "PHP": "PH",
+    "SGD": "SG",
+    "THB": "TH",
+    "ZAR": "ZA"
+  };
+  static const List<String> AVAILABLE_CURRENCY_CODE_LIST = [
+    "EUR",
+    "USD",
+    "JPY",
+    "BGN",
+    "CZK",
+    "DKK",
+    "GBP",
+    "HUF",
+    "PLN",
+    "RON",
+    "SEK",
+    "CHF",
+    "ISK",
+    "NOK",
+    "HRK",
+    "RUB",
+    "TRY",
+    "AUD",
+    "BRL",
+    "CAD",
+    "CNY",
+    "HKD",
+    "IDR",
+    "ILS",
+    "INR",
+    "KRW",
+    "MXN",
+    "MYR",
+    "NZD",
+    "PHP",
+    "SGD",
+    "THB",
+    "ZAR"
+  ];
 }

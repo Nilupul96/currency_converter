@@ -26,6 +26,7 @@ class MyApp extends StatelessWidget {
             ],
             child: MaterialApp.router(
               title: 'Currency converter',
+              debugShowCheckedModeBanner: false,
               theme: AppTheme.appLightTheme,
               themeMode: ThemeMode.dark,
               darkTheme: AppTheme.darkTheme,

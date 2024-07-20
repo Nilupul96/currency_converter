@@ -1,8 +1,3 @@
-
-
 class AppAssets {
-
-  static String get waiting_anim => "lib/assets/anim/waiting.riv";
-
-  static String get emptyView => 'lib/assets/images/empty_view.svg';
+  static String get logo => 'lib/assets/images/logo.png';
 }

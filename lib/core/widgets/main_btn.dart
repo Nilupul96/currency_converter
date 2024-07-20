@@ -8,7 +8,7 @@ class MainBtn extends StatefulWidget {
   final bool isLoading;
   final bool isEnabled;
   final Color bgColor;
-  final String? icon;
+  final Widget? icon;
   final bool disableSplash;
 
   const MainBtn(
@@ -36,13 +36,14 @@ class _MainBtnState extends State<MainBtn> {
       height: 50.h,
       child: ElevatedButton(
           style: ElevatedButton.styleFrom(
-            primary: !widget.isEnabled ? AppColors.bgBlue : widget.bgColor,
+            backgroundColor:
+                !widget.isEnabled ? AppColors.lightGreen : widget.bgColor,
             elevation: 0.0,
             splashFactory: widget.disableSplash
                 ? NoSplash.splashFactory
                 : InkRipple.splashFactory,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8.0),
+              borderRadius: BorderRadius.circular(20),
             ),
           ),
           onPressed: widget.isEnabled
@@ -64,16 +65,16 @@ class _MainBtnState extends State<MainBtn> {
               : Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(widget.lbl,
-                        style: Theme.of(context)
-                            .textTheme
-                            .labelLarge
-                            ?.copyWith(color: AppColors.black)),
                     if (widget.icon != null)
                       Padding(
                           padding: EdgeInsets.symmetric(
                               vertical: 12.h, horizontal: 10.w),
-                          child: Image.asset(widget.icon!))
+                          child: widget.icon!),
+                    Text(widget.lbl,
+                        style: Theme.of(context)
+                            .textTheme
+                            .labelLarge
+                            ?.copyWith(color: AppColors.white)),
                   ],
                 )),
     );

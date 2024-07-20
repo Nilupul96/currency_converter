@@ -3,7 +3,6 @@
 import 'dart:convert';
 import 'dart:io';
 import '../helpers/app_logger.dart';
-import '../helpers/local_storage.dart';
 import 'net_exception.dart';
 import 'net_result.dart';
 import 'package:http/http.dart' as http;
@@ -156,7 +155,7 @@ class Net {
     request.headers.addAll(headers);
     fields ??= {};
     fields!.forEach((key, value) {
-      request.fields['$key'] = value;
+      request.fields[key] = value;
     });
     imagePathList ??= {};
     List<dynamic> data = imagePathList!.entries.cast().toList();
@@ -194,7 +193,7 @@ class Net {
     headers ??= {};
     if (_TOKEN != null || _TOKEN != "") {
       Log.debug("token get from local");
-      _TOKEN = await LocalStorage().getUserToken();
+      // _TOKEN = await LocalStorage().getUserToken();
     }
     if (_TOKEN != null &&
         !headers!.containsKey(HttpHeaders.authorizationHeader) &&
@@ -257,18 +256,4 @@ class Net {
   Future<String> processUrl() async {
     return "${getPathParameters(url)}?${Uri(queryParameters: queryParam).query}";
   }
-
-  // recordError(http.Response response, Result result) async {
-  //   if (result.net != null) {
-  //     await FirebaseCrashlytics.instance
-  //         .setCustomKey(result.net!.url, response.body);
-
-  //     await FirebaseCrashlytics.instance
-  //         .log("${result.net!.url} --- ${response.body}");
-
-  //     await FirebaseCrashlytics.instance.recordError(
-  //         "SERVER ERROR ${response.statusCode}",
-  //         StackTrace.fromString(response.body));
-  //   }
-  // }
 }

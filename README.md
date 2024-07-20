@@ -61,7 +61,7 @@ If you haven't already, install Flutter by following the instructions on the off
 
 flutter pub get
 
-4. **Running the App**:
+## Running the App:
 
 Run on an emulator or connected device:
 

@@ -22,7 +22,9 @@ class AppRoutes {
       GoRoute(
         name: CurrencyListScreen.routeName,
         path: '/currency-list',
-        builder: (context, state) => const CurrencyListScreen(),
+        builder: (context, state) => CurrencyListScreen(
+          baseCurrencyCode: state.extra as String,
+        ),
       ),
     ],
   );

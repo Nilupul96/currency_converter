@@ -1,3 +1,4 @@
+import 'package:currency_converter/core/app_const.dart';
 import 'package:currency_converter/core/widgets/main_btn.dart';
 import 'package:currency_converter/core/widgets/main_text_field.dart';
 import 'package:currency_converter/features/home/presentation/pages/currency_list_screen.dart';
@@ -21,11 +22,13 @@ class CurrencyConverterScreen extends StatefulWidget {
 }
 
 class _CurrencyConverterScreenState extends State<CurrencyConverterScreen> {
-  final _formKey = GlobalKey<FormState>();
   final _currencyController = TextEditingController();
+  String baseCurrencyCode = AppConst.INITIAL_CURRENCY_CODE;
 
-  convertCurrency(List<String> currencyList) {
-    context.read<HomeBloc>().add(ConvertCurrency(currencyList, "USD"));
+  void fetchCurrencyRates(List<String> currencyList) {
+    context
+        .read<HomeBloc>()
+        .add(FetchCurrencyRates(currencyList, baseCurrencyCode));
   }
 
   double getRate(String code, HomeSuccess state) {
@@ -47,85 +50,99 @@ class _CurrencyConverterScreenState extends State<CurrencyConverterScreen> {
       body: BlocConsumer<HomeBloc, HomeState>(listener: (context, state) {
         Log.info(state.toString());
       }, builder: (context, state) {
-        return Form(
-          key: _formKey,
-          child: SingleChildScrollView(
-            physics: const AlwaysScrollableScrollPhysics(),
-            keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20.w),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
+        return SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20.w),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                const RSizedBox(
+                  height: 40,
+                ),
+                Text(
+                  'Insert Amount:',
+                  textAlign: TextAlign.left,
+                  style: Theme.of(context).textTheme.displayMedium,
+                ),
+                const RSizedBox(
+                  height: 10,
+                ),
+                CustomTextFormField(
+                    labelText: "Amount",
+                    keyboardType: TextInputType.number,
+                    textEditingController: _currencyController,
+                    hintText: "Please Insert Amount",
+                    onChanged: (value) {
+                      setState(() {});
+                    },
+                    suffixIcon: CountryPickerComponent(
+                      currencyCode: baseCurrencyCode,
+                      onValuePicked: (country) {
+                        setState(() {
+                          if (country != null) {
+                            baseCurrencyCode = country.currencyCode ??
+                                AppConst.INITIAL_CURRENCY_CODE;
+                          }
+                          fetchCurrencyRates(
+                              (state as HomeSuccess).selectedCurrencyCode);
+                        });
+                      },
+                    )),
+                const RSizedBox(
+                  height: 40,
+                ),
+                Text(
+                  'Convert To:',
+                  textAlign: TextAlign.left,
+                  style: Theme.of(context).textTheme.displayMedium,
+                ),
+                const RSizedBox(
+                  height: 10,
+                ),
+                if (state is HomeSuccess && state.selectedCurrencyCode.isEmpty)
                   const RSizedBox(
-                    height: 40,
-                  ),
-                  Text(
-                    'Insert Amount:',
-                    textAlign: TextAlign.left,
-                    style: Theme.of(context).textTheme.displayMedium,
-                  ),
-                  const RSizedBox(
-                    height: 10,
-                  ),
-                  CustomTextFormField(
-                      labelText: "Amount",
-                      keyboardType: TextInputType.number,
-                      textEditingController: _currencyController,
-                      hintText: "Please Insert Amount",
-                      suffixIcon: CountryPickerComponent(
-                        currencyCode: 'USD',
-                        onValuePicked: (country) {},
-                      )),
-                  const RSizedBox(
-                    height: 40,
-                  ),
-                  Text(
-                    'Convert To:',
-                    textAlign: TextAlign.left,
-                    style: Theme.of(context).textTheme.displayMedium,
-                  ),
-                  const RSizedBox(
-                    height: 10,
-                  ),
-                  if (state is HomeSuccess &&
-                      state.selectedCurrencyCode.isEmpty)
-                    const RSizedBox(
-                        height: 100,
-                        child: Center(child: Text("No selected converters"))),
-                  if (state is HomeSuccess)
-                    ListView.builder(
-                        itemCount: state.selectedCurrencyCode.length,
-                        shrinkWrap: true,
-                        physics: const ClampingScrollPhysics(),
-                        itemBuilder: (BuildContext context, int index) {
-                          return ConvertedCurrencyListTile(
-                            currencyCode: state.selectedCurrencyCode[index],
-                            value: _currencyController.text.isEmpty
-                                ? ''
-                                : "${double.parse(_currencyController.text.trim()) * getRate(state.selectedCurrencyCode[index], state)}",
-                          );
+                      height: 100,
+                      child: Center(child: Text("No selected converters"))),
+                if (state is HomeSuccess)
+                  ListView.builder(
+                      itemCount: state.selectedCurrencyCode.length,
+                      shrinkWrap: true,
+                      physics: const ClampingScrollPhysics(),
+                      itemBuilder: (BuildContext context, int index) {
+                        return ConvertedCurrencyListTile(
+                          currencyCode: state.selectedCurrencyCode[index],
+                          value: _currencyController.text.isEmpty
+                              ? '0'
+                              : "${double.parse(_currencyController.text.trim()) * getRate(state.selectedCurrencyCode[index], state)}",
+                          onCountryPicked: (country) {
+                            state.selectedCurrencyCode[index] =
+                                country!.currencyCode!;
+                            fetchCurrencyRates(state.selectedCurrencyCode);
+                          },
+                        );
+                      }),
+                const RSizedBox(
+                  height: 20,
+                ),
+                Center(
+                  child: SizedBox(
+                    width: 200.w,
+                    child: MainBtn(
+                        lbl: "Add Converter",
+                        bgColor: AppColors.lightGreen.withOpacity(0.4),
+                        icon: const Icon(Icons.add),
+                        onClick: () async {
+                          context.pushNamed(CurrencyListScreen.routeName,
+                              extra: baseCurrencyCode);
                         }),
-                  const RSizedBox(
-                    height: 20,
                   ),
-                  Center(
-                    child: SizedBox(
-                      width: 200.w,
-                      child: MainBtn(
-                          lbl: "Add Converter",
-                          bgColor: AppColors.lightGreen.withOpacity(0.4),
-                          icon: const Icon(Icons.add),
-                          onClick: () async {
-                            context.pushNamed(CurrencyListScreen.routeName);
-                          }),
-                    ),
-                  ),
-                  const RSizedBox(
-                    height: 20,
-                  ),
-                ],
-              ),
+                ),
+                const RSizedBox(
+                  height: 20,
+                ),
+              ],
             ),
           ),
         );

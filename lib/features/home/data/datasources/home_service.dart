@@ -11,7 +11,7 @@ import '../models/currency_rate_model.dart';
 
 abstract class HomeService {
   Future<Result> fetchCurrencyList();
-  Future<Result> convertCurrency(
+  Future<Result> fetchCurrencyRates(
       {required String baseCurrency,
       required List<String> convertCurrencyCodes});
 }
@@ -45,7 +45,7 @@ class HomeServiceImpl implements HomeService {
   }
 
   @override
-  Future<Result> convertCurrency(
+  Future<Result> fetchCurrencyRates(
       {required String baseCurrency,
       required List<String> convertCurrencyCodes}) async {
     Result result = Result();

@@ -1,4 +1,4 @@
-import 'package:currency_converter/features/home/presentation/pages/currency_converter.dart';
+import 'package:currency_converter/core/widgets/progress_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -7,8 +7,9 @@ import '../bloc/home_bloc.dart';
 import '../widgets/currency_list_tile.dart';
 
 class CurrencyListScreen extends StatefulWidget {
+  final String baseCurrencyCode;
   static const routeName = "/currency-list-screen";
-  const CurrencyListScreen({super.key});
+  const CurrencyListScreen({super.key, required this.baseCurrencyCode});
 
   @override
   State<CurrencyListScreen> createState() => _CurrencyListScreenState();
@@ -16,9 +17,11 @@ class CurrencyListScreen extends StatefulWidget {
 
 class _CurrencyListScreenState extends State<CurrencyListScreen> {
   List<String> selectedCurrencyList = [];
+  late ProgressDialog _progressDialog;
   @override
   void initState() {
     setInitialSelectedCurrency();
+    _progressDialog = ProgressDialog(context);
     super.initState();
   }
 
@@ -28,6 +31,14 @@ class _CurrencyListScreenState extends State<CurrencyListScreen> {
     setState(() {});
   }
 
+  Future<void> fetchCurrencyRates() async {
+    context.read<HomeBloc>().add(SetSelectedCurrencyList(selectedCurrencyList));
+    context
+        .read<HomeBloc>()
+        .add(FetchCurrencyRates(selectedCurrencyList, widget.baseCurrencyCode));
+    Log.debug('Saved currency list --$selectedCurrencyList');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,18 +46,23 @@ class _CurrencyListScreenState extends State<CurrencyListScreen> {
           title: const Text('Currency List'),
           actions: [
             IconButton(
-                onPressed: () {
-                  context
-                      .read<HomeBloc>()
-                      .add(SetSelectedCurrencyList(selectedCurrencyList));
-                  Log.debug('Saved currency list --$selectedCurrencyList');
-                  context.pop();
-                },
+                onPressed: () => fetchCurrencyRates(),
                 icon: const Icon(Icons.done))
           ],
         ),
         body: BlocConsumer<HomeBloc, HomeState>(
-          listener: (context, state) {},
+          listener: (context, state) {
+            if (state is FetchCurrencyRatesLoading) {
+              _progressDialog.show();
+            }
+            if (state is HomeSuccess) {
+              _progressDialog.hide();
+              context.pop();
+            }
+            if (state is HomeError) {
+              _progressDialog.hide();
+            }
+          },
           builder: (context, state) {
             if (state is HomeSuccess) {
               return ListView.builder(

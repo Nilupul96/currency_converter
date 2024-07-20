@@ -1,3 +1,4 @@
+import 'package:country_currency_pickers/country.dart';
 import 'package:currency_converter/features/home/presentation/widgets/country_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -6,8 +7,12 @@ import '../../../../core/widgets/main_text_field.dart';
 class ConvertedCurrencyListTile extends StatelessWidget {
   final String value;
   final String currencyCode;
+  final ValueChanged<Country?>? onCountryPicked;
   const ConvertedCurrencyListTile(
-      {super.key, required this.value, required this.currencyCode});
+      {super.key,
+      required this.value,
+      required this.currencyCode,
+      this.onCountryPicked});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +29,7 @@ class ConvertedCurrencyListTile extends StatelessWidget {
                 readOnly: true,
                 suffixIcon: CountryPickerComponent(
                   currencyCode: currencyCode,
-                  onValuePicked: (country) {},
+                  onValuePicked: onCountryPicked,
                 )),
           ),
         ],

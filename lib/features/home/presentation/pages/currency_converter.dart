@@ -9,6 +9,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/app_colors.dart';
 import '../../../../core/helpers/app_logger.dart';
 import '../bloc/home_bloc.dart';
+import '../widgets/country_picker.dart';
 
 class CurrencyConverterScreen extends StatefulWidget {
   static const routeName = "/currency-converter-screen";
@@ -68,11 +69,14 @@ class _CurrencyConverterScreenState extends State<CurrencyConverterScreen> {
                     height: 10,
                   ),
                   CustomTextFormField(
-                    labelText: "Amount",
-                    keyboardType: TextInputType.number,
-                    textEditingController: _currencyController,
-                    hintText: "Please Insert Amount",
-                  ),
+                      labelText: "Amount",
+                      keyboardType: TextInputType.number,
+                      textEditingController: _currencyController,
+                      hintText: "Please Insert Amount",
+                      suffixIcon: CountryPickerComponent(
+                        currencyCode: 'USD',
+                        onValuePicked: (country) {},
+                      )),
                   const RSizedBox(
                     height: 40,
                   ),
@@ -86,11 +90,9 @@ class _CurrencyConverterScreenState extends State<CurrencyConverterScreen> {
                   ),
                   if (state is HomeSuccess &&
                       state.selectedCurrencyCode.isEmpty)
-                    RSizedBox(
+                    const RSizedBox(
                         height: 100,
-                        child: Center(
-                            child: Text(
-                                "No selected converters ${state.selectedCurrencyCode}"))),
+                        child: Center(child: Text("No selected converters"))),
                   if (state is HomeSuccess)
                     ListView.builder(
                         itemCount: state.selectedCurrencyCode.length,
@@ -98,8 +100,10 @@ class _CurrencyConverterScreenState extends State<CurrencyConverterScreen> {
                         physics: const ClampingScrollPhysics(),
                         itemBuilder: (BuildContext context, int index) {
                           return ConvertedCurrencyListTile(
-                            value:
-                                "${double.parse(_currencyController.text.trim()) * getRate(state.selectedCurrencyCode[index], state)}",
+                            currencyCode: state.selectedCurrencyCode[index],
+                            value: _currencyController.text.isEmpty
+                                ? ''
+                                : "${double.parse(_currencyController.text.trim()) * getRate(state.selectedCurrencyCode[index], state)}",
                           );
                         }),
                   const RSizedBox(
@@ -120,19 +124,6 @@ class _CurrencyConverterScreenState extends State<CurrencyConverterScreen> {
                   const RSizedBox(
                     height: 20,
                   ),
-                  if (state is HomeSuccess)
-                    Center(
-                      child: SizedBox(
-                        width: 200.w,
-                        child: MainBtn(
-                            lbl: "Convert",
-                            bgColor: AppColors.lightGreen.withOpacity(0.4),
-                            icon: const Icon(Icons.add),
-                            onClick: () async {
-                              convertCurrency(state.selectedCurrencyCode);
-                            }),
-                      ),
-                    )
                 ],
               ),
             ),

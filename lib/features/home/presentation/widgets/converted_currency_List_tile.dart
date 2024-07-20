@@ -1,11 +1,13 @@
-import 'package:currency_converter/core/app_colors.dart';
+import 'package:currency_converter/features/home/presentation/widgets/country_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/widgets/main_text_field.dart';
 
 class ConvertedCurrencyListTile extends StatelessWidget {
   final String value;
-  const ConvertedCurrencyListTile({super.key, required this.value});
+  final String currencyCode;
+  const ConvertedCurrencyListTile(
+      {super.key, required this.value, required this.currencyCode});
 
   @override
   Widget build(BuildContext context) {
@@ -15,19 +17,16 @@ class ConvertedCurrencyListTile extends StatelessWidget {
         children: [
           Expanded(
             child: CustomTextFormField(
-              labelText: "",
-              keyboardType: TextInputType.number,
-              textEditingController: TextEditingController(),
-              hintText: value,
-              readOnly: true,
-            ),
+                labelText: "",
+                keyboardType: TextInputType.number,
+                textEditingController: TextEditingController(),
+                hintText: value,
+                readOnly: true,
+                suffixIcon: CountryPickerComponent(
+                  currencyCode: currencyCode,
+                  onValuePicked: (country) {},
+                )),
           ),
-          IconButton(
-              onPressed: () {},
-              icon: Icon(
-                Icons.delete_outline,
-                color: AppColors.red,
-              ))
         ],
       ),
     );

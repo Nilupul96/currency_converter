@@ -3,7 +3,6 @@
 import 'package:shared_preferences/shared_preferences.dart';
 import 'app_logger.dart';
 
-
 class LocalStorage {
   static final LocalStorage _singleton = LocalStorage._internal();
 
@@ -13,19 +12,29 @@ class LocalStorage {
 
   LocalStorage._internal();
 
-  static String get USER_TOKEN_KEY => "com.getin.app.user_token";
-  static String get IS_SESSION_EXPIRED => "com.getin.app.is_session_expired";
-  
+  static String get BASE_CURRENCY => "com.currency-converter.app.base_currency";
+  static String get SELECTED_CURRENCY =>
+      "com.currency-converter.app.selected-currency";
 
-  Future<String?> getUserToken() async {
+  Future<String?> getBaseCurrency() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getString(USER_TOKEN_KEY);
+    return prefs.getString(BASE_CURRENCY);
   }
 
-  Future<void> saveToken(String token) async {
+  Future<void> saveBaseCurrency(String currency) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-   await prefs.setString(USER_TOKEN_KEY, token);
-    Log.info("$token save in local");
+    await prefs.setString(BASE_CURRENCY, currency);
+    Log.info("$currency save in local");
   }
 
+  Future<List<String>?> getSelectedCurrency() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getStringList(SELECTED_CURRENCY);
+  }
+
+  Future<void> saveSelectedCurrencyList(List<String> currencyList) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setStringList(SELECTED_CURRENCY, currencyList);
+    Log.info("$currencyList save in local");
+  }
 }

@@ -1,3 +1,4 @@
+import 'package:currency_converter/core/helpers/local_storage.dart';
 import 'package:currency_converter/features/home/domain/entities/currency.dart';
 import 'package:currency_converter/features/home/domain/entities/currency_rates.dart';
 import 'package:currency_converter/features/home/domain/usecases/fetch_cuurency_rates_usecase.dart';
@@ -16,19 +17,24 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<FetchCurrencyList>(_fetchCurrencyList);
     on<SetSelectedCurrencyList>(_setSelectedCurrencyList);
     on<FetchCurrencyRates>(_fetchCurrencyRates);
+    on<SaveBaseCurrency>(_saveBaseCurrency);
   }
 
   void _fetchCurrencyList(
       FetchCurrencyList event, Emitter<HomeState> emit) async {
     emit(HomeLoading());
     Result result = await _fetchCurrencyListUseCase.call();
+    List<String>? selectedCurrencyList =
+        await LocalStorage().getSelectedCurrency();
+    String? baseCurrency = await LocalStorage().getBaseCurrency();
     if (result.exception != null) {
       emit(HomeError(error: result.exception!.message ?? ''));
     }
     if (result.exception == null) {
       emit(HomeSuccess(
           currencyList: result.result,
-          selectedCurrencyCode: [],
+          selectedCurrencyCode: selectedCurrencyList ?? [],
+          baseCurrency: baseCurrency,
           currencyRates: []));
     }
   }
@@ -37,8 +43,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       SetSelectedCurrencyList event, Emitter<HomeState> emit) async {
     emit(HomeSuccess(
         currencyList: (state as HomeSuccess).currencyList,
+        baseCurrency: (state as HomeSuccess).baseCurrency,
         selectedCurrencyCode: event.currencyCodeList,
         currencyRates: (state as HomeSuccess).currencyRates));
+    LocalStorage().saveSelectedCurrencyList(event.currencyCodeList);
   }
 
   void _fetchCurrencyRates(
@@ -55,9 +63,15 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       emit(
         HomeSuccess(
             currencyList: (state as HomeSuccess).currencyList,
+            baseCurrency: (state as HomeSuccess).baseCurrency,
             currencyRates: result.result,
             selectedCurrencyCode: (state as HomeSuccess).selectedCurrencyCode),
       );
     }
+  }
+
+  void _saveBaseCurrency(
+      SaveBaseCurrency event, Emitter<HomeState> emit) async {
+    await LocalStorage().saveBaseCurrency(event.baseCurrency);
   }
 }

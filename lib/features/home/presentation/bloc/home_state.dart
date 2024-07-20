@@ -15,10 +15,12 @@ class HomeSuccess extends HomeState {
   final List<Currency> currencyList;
   final List<String> selectedCurrencyCode;
   final List<CurrencyRate> currencyRates;
+  final String? baseCurrency;
 
   const HomeSuccess(
       {required this.currencyList,
       required this.selectedCurrencyCode,
+      this.baseCurrency,
       required this.currencyRates});
   @override
   List<Object> get props => [currencyList, selectedCurrencyCode, currencyRates];

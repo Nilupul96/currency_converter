@@ -25,6 +25,18 @@ class _CurrencyConverterScreenState extends State<CurrencyConverterScreen> {
   final _currencyController = TextEditingController();
   String baseCurrencyCode = AppConst.INITIAL_CURRENCY_CODE;
 
+  @override
+  void initState() {
+    super.initState();
+    loadInitialValues();
+  }
+
+  loadInitialValues() {
+    HomeSuccess state = context.read<HomeBloc>().state as HomeSuccess;
+    fetchCurrencyRates(state.selectedCurrencyCode);
+    baseCurrencyCode = state.baseCurrency ?? AppConst.INITIAL_CURRENCY_CODE;
+  }
+
   void fetchCurrencyRates(List<String> currencyList) {
     context
         .read<HomeBloc>()
@@ -85,6 +97,9 @@ class _CurrencyConverterScreenState extends State<CurrencyConverterScreen> {
                             baseCurrencyCode = country.currencyCode ??
                                 AppConst.INITIAL_CURRENCY_CODE;
                           }
+                          context
+                              .read<HomeBloc>()
+                              .add(SaveBaseCurrency(baseCurrencyCode));
                           fetchCurrencyRates(
                               (state as HomeSuccess).selectedCurrencyCode);
                         });

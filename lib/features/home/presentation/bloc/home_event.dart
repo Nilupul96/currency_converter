@@ -21,3 +21,10 @@ class FetchCurrencyRates extends HomeEvent {
 
   const FetchCurrencyRates(this.currencyCodeList, this.baseCurrency);
 }
+
+class SaveBaseCurrency extends HomeEvent {
+  final String baseCurrency;
+  const SaveBaseCurrency(this.baseCurrency);
+}
+
+class GetBaseCurrency extends HomeEvent {}

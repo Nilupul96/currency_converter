@@ -33,8 +33,8 @@ class _CurrencyConverterScreenState extends State<CurrencyConverterScreen> {
 
   loadInitialValues() {
     HomeSuccess state = context.read<HomeBloc>().state as HomeSuccess;
-    fetchCurrencyRates(state.selectedCurrencyCode);
     baseCurrencyCode = state.baseCurrency ?? AppConst.INITIAL_CURRENCY_CODE;
+    fetchCurrencyRates(state.selectedCurrencyCode);
   }
 
   void fetchCurrencyRates(List<String> currencyList) {
@@ -138,6 +138,10 @@ class _CurrencyConverterScreenState extends State<CurrencyConverterScreen> {
                             state.selectedCurrencyCode[index] =
                                 country!.currencyCode!;
                             fetchCurrencyRates(state.selectedCurrencyCode);
+                          },
+                          removeCurrency: () {
+                            state.selectedCurrencyCode.removeAt(index);
+                            setState(() {});
                           },
                         );
                       }),

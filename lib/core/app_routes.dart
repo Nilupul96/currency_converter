@@ -1,5 +1,6 @@
 import 'package:currency_converter/features/home/presentation/pages/currency_converter.dart';
 import 'package:currency_converter/features/home/presentation/pages/currency_list_screen.dart';
+import 'package:currency_converter/no_internet_screen.dart';
 import 'package:go_router/go_router.dart';
 import '../features/home/presentation/pages/splash_screen.dart';
 import 'helpers/navigation_service.dart';
@@ -25,6 +26,11 @@ class AppRoutes {
         builder: (context, state) => CurrencyListScreen(
           baseCurrencyCode: state.extra as String,
         ),
+      ),
+      GoRoute(
+        name: NoInternetScreen.routeName,
+        path: '/no-internet',
+        builder: (context, state) => const NoInternetScreen(),
       ),
     ],
   );

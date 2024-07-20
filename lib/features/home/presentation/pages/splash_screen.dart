@@ -1,12 +1,15 @@
 import 'package:currency_converter/core/app_assets.dart';
 import 'package:currency_converter/core/app_colors.dart';
+import 'package:currency_converter/core/helpers/connectivity_manager.dart';
 import 'package:currency_converter/core/widgets/snackbar_dialog.dart';
 import 'package:currency_converter/features/home/presentation/pages/currency_converter.dart';
+import 'package:currency_converter/no_internet_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/widgets/common_dialog.dart';
 import '../bloc/home_bloc.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -25,7 +28,13 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Future<void> fetchCurrencyList() async {
-    context.read<HomeBloc>().add(FetchCurrencyList());
+    bool isInternetAvailable = await ConnectivityManager.connected();
+    if (!context.mounted) return;
+    if (isInternetAvailable) {
+      context.read<HomeBloc>().add(FetchCurrencyList());
+    } else {
+      context.goNamed(NoInternetScreen.routeName);
+    }
   }
 
   @override
@@ -37,7 +46,7 @@ class _SplashScreenState extends State<SplashScreen> {
             context.pushReplacementNamed(CurrencyConverterScreen.routeName);
           }
           if (state is HomeError) {
-            SnackBarDialog.showSnackBar(context, state.error);
+            CommonDialog.showErrorDialog(context, "Oops", state.error);
           }
         },
         builder: (context, state) {

@@ -7,5 +7,5 @@ class AppColors {
   static Color get white => Colors.white;
   static Color get grey => Colors.grey.withOpacity(0.2);
   static Color get red => Colors.red;
-  static Color get lightGreen => Colors.lightGreen;
+  static Color get lightGreen => Color(0xFF8BC34A);
 }

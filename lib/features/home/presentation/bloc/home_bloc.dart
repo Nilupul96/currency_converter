@@ -18,6 +18,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<SetSelectedCurrencyList>(_setSelectedCurrencyList);
     on<FetchCurrencyRates>(_fetchCurrencyRates);
     on<SaveBaseCurrency>(_saveBaseCurrency);
+    on<RemoveCurrency>(_removeCurrency);
   }
 
   void _fetchCurrencyList(
@@ -73,5 +74,21 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   void _saveBaseCurrency(
       SaveBaseCurrency event, Emitter<HomeState> emit) async {
     await LocalStorage().saveBaseCurrency(event.baseCurrency);
+  }
+
+  _removeCurrency(RemoveCurrency event, Emitter<HomeState> emit) {
+    List<String> selectedCurrency = (state as HomeSuccess).selectedCurrencyCode;
+    selectedCurrency.remove(event.currencyCode);
+
+    print(selectedCurrency);
+    emit(
+      HomeSuccess(
+          currencyList: (state as HomeSuccess).currencyList,
+          baseCurrency: (state as HomeSuccess).baseCurrency,
+          currencyRates: (state as HomeSuccess).currencyRates,
+          selectedCurrencyCode: selectedCurrency),
+    );
+    LocalStorage()
+        .saveSelectedCurrencyList((state as HomeSuccess).selectedCurrencyCode);
   }
 }

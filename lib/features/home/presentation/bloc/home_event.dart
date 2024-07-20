@@ -28,3 +28,9 @@ class SaveBaseCurrency extends HomeEvent {
 }
 
 class GetBaseCurrency extends HomeEvent {}
+
+class RemoveCurrency extends HomeEvent {
+  final String currencyCode;
+
+  const RemoveCurrency({required this.currencyCode});
+}

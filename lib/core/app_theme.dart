@@ -20,6 +20,7 @@ class AppTheme {
       useMaterial3: true,
       scaffoldBackgroundColor: AppColors.black,
       iconTheme: const IconThemeData(color: Colors.white),
+      fontFamily: 'Montserrat',
       appBarTheme: AppBarTheme(
           backgroundColor: AppColors.black,
           centerTitle: true,
@@ -61,9 +62,21 @@ class AppTheme {
 
   static TextTheme textTheme() => TextTheme(
       displayLarge: TextStyle(
-          fontWeight: FontWeight.bold, color: Colors.black, fontSize: 20.sp),
-      displayMedium: TextStyle(fontWeight: FontWeight.w700, fontSize: 16.sp),
-      displaySmall: TextStyle(fontWeight: FontWeight.w400, fontSize: 14.sp));
+        fontWeight: FontWeight.bold,
+        color: Colors.black,
+        fontSize: 20.sp,
+        fontFamily: 'Montserrat',
+      ),
+      displayMedium: TextStyle(
+        fontWeight: FontWeight.w700,
+        fontSize: 16.sp,
+        fontFamily: 'Montserrat',
+      ),
+      displaySmall: TextStyle(
+        fontWeight: FontWeight.w400,
+        fontSize: 14.sp,
+        fontFamily: 'Montserrat',
+      ));
 
   static AppBarTheme appBarTheme() => AppBarTheme(
       backgroundColor: Colors.white,

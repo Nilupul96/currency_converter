@@ -1,7 +1,10 @@
+import 'package:currency_converter/core/app_assets.dart';
+import 'package:currency_converter/core/app_colors.dart';
 import 'package:currency_converter/core/widgets/snackbar_dialog.dart';
 import 'package:currency_converter/features/home/presentation/pages/currency_converter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
 import '../bloc/home_bloc.dart';
@@ -41,12 +44,15 @@ class _SplashScreenState extends State<SplashScreen> {
           return Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              Image.asset(AppAssets.logo),
+              RSizedBox(height: 30),
               Center(
-                child: Text(
-                  "Currency converter",
-                  style: Theme.of(context).textTheme.displayLarge,
-                ),
-              )
+                child: Text("Currency converter",
+                    style: TextStyle(
+                        fontFamily: 'Blackness',
+                        color: AppColors.lightGreen,
+                        fontSize: 36.sp)),
+              ),
             ],
           );
         },

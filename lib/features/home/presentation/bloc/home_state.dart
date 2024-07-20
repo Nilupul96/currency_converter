@@ -23,7 +23,8 @@ class HomeSuccess extends HomeState {
       this.baseCurrency,
       required this.currencyRates});
   @override
-  List<Object> get props => [currencyList, selectedCurrencyCode, currencyRates];
+  List<Object> get props =>
+      [currencyList, selectedCurrencyCode, currencyRates, baseCurrency!];
 }
 
 class HomeError extends HomeState {

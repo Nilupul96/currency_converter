@@ -87,3 +87,17 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
     );
   }
 }
+
+class NumberAndDecimalInputFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(
+      TextEditingValue oldValue, TextEditingValue newValue) {
+    final RegExp regex = RegExp(r'^\d*\.?\d*$');
+
+    if (regex.hasMatch(newValue.text)) {
+      return newValue;
+    }
+
+    return oldValue;
+  }
+}

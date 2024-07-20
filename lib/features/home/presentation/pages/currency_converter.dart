@@ -31,7 +31,7 @@ class _CurrencyConverterScreenState extends State<CurrencyConverterScreen> {
     loadInitialValues();
   }
 
-  loadInitialValues() {
+  void loadInitialValues() {
     HomeSuccess state = context.read<HomeBloc>().state as HomeSuccess;
     baseCurrencyCode = state.baseCurrency ?? AppConst.INITIAL_CURRENCY_CODE;
     fetchCurrencyRates(state.selectedCurrencyCode);
@@ -86,6 +86,7 @@ class _CurrencyConverterScreenState extends State<CurrencyConverterScreen> {
                     keyboardType: TextInputType.number,
                     textEditingController: _currencyController,
                     hintText: "Please Insert Amount",
+                    inputFormatter: [NumberAndDecimalInputFormatter()],
                     onChanged: (value) {
                       setState(() {});
                     },
@@ -140,7 +141,9 @@ class _CurrencyConverterScreenState extends State<CurrencyConverterScreen> {
                             fetchCurrencyRates(state.selectedCurrencyCode);
                           },
                           removeCurrency: () {
-                            state.selectedCurrencyCode.removeAt(index);
+                            context.read<HomeBloc>().add(RemoveCurrency(
+                                currencyCode:
+                                    state.selectedCurrencyCode[index]));
                             setState(() {});
                           },
                         );

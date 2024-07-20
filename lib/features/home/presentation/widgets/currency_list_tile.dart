@@ -1,6 +1,9 @@
+import 'package:country_currency_pickers/country.dart';
+import 'package:country_currency_pickers/country_pickers.dart';
 import 'package:currency_converter/features/home/domain/entities/currency.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../../../core/app_const.dart';
 
 class CurrencyListTile extends StatefulWidget {
   final Currency currency;
@@ -22,7 +25,16 @@ class _CurrencyListTileState extends State<CurrencyListTile> {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 20.w),
       child: CheckboxListTile(
-        title: Text("${widget.currency.name}   (${widget.currency.symbol})"),
+        title: Row(
+          children: [
+            CountryPickerUtils.getDefaultFlagImage(Country(
+                isoCode: AppConst.CURRENCY_TO_COUNTRY[widget.currency.code])),
+            const SizedBox(width: 10),
+            Expanded(
+                child: Text(
+                    "${widget.currency.name}   (${widget.currency.symbol})")),
+          ],
+        ),
         value: widget.isSelected,
         onChanged: (value) => widget.onSelect(value!),
       ),

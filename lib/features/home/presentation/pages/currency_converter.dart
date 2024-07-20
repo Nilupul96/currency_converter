@@ -115,7 +115,10 @@ class _CurrencyConverterScreenState extends State<CurrencyConverterScreen> {
                           currencyCode: state.selectedCurrencyCode[index],
                           value: _currencyController.text.isEmpty
                               ? '0'
-                              : "${double.parse(_currencyController.text.trim()) * getRate(state.selectedCurrencyCode[index], state)}",
+                              : (double.parse(_currencyController.text.trim()) *
+                                      getRate(state.selectedCurrencyCode[index],
+                                          state))
+                                  .toStringAsFixed(2),
                           onCountryPicked: (country) {
                             state.selectedCurrencyCode[index] =
                                 country!.currencyCode!;

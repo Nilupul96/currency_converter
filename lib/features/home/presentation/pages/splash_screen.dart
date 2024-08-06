@@ -1,7 +1,6 @@
 import 'package:currency_converter/core/app_assets.dart';
 import 'package:currency_converter/core/app_colors.dart';
 import 'package:currency_converter/core/helpers/connectivity_manager.dart';
-import 'package:currency_converter/core/widgets/snackbar_dialog.dart';
 import 'package:currency_converter/features/home/presentation/pages/currency_converter.dart';
 import 'package:currency_converter/no_internet_screen.dart';
 import 'package:flutter/material.dart';

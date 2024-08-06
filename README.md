@@ -61,6 +61,16 @@ If you haven't already, install Flutter by following the instructions on the off
 
 flutter pub get
 
+4. **Add your API Key**:
+
+get Your API key from this web site--> https://app.freecurrencyapi.com 
+
+Then create .env file in your root project directory
+
+API_KEY = YOUR_API_KEY add this line in .env file and replace your API Key
+
+For more details--> https://pub.dev/packages/flutter_dotenv
+
 ## Running the App:
 
 Run on an emulator or connected device:

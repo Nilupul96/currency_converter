@@ -1,8 +1,6 @@
 // ignore_for_file: constant_identifier_names
 
 class AppConst {
-  static const String API_KEY =
-      'fca_live_YNjFldcjhKItLTt534wU4AtMMQ6NHASKMO4YyBLc';
   static const String INITIAL_CURRENCY_CODE = 'USD';
   static Map<String, String> CURRENCY_TO_COUNTRY = {
     "EUR": "FR",

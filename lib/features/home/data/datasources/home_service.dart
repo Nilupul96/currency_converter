@@ -1,6 +1,5 @@
 import 'dart:convert';
-
-import '../../../../core/app_const.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import '../../../../core/helpers/app_logger.dart';
 import '../../../../core/network/net_exception.dart';
 import '../../../../core/network/net.dart';
@@ -24,7 +23,7 @@ class HomeServiceImpl implements HomeService {
       var net = Net(
           url: URL.GET_CURRENCY_LIST,
           method: NetMethod.GET,
-          queryParam: {'apikey': AppConst.API_KEY});
+          queryParam: {'apikey': dotenv.env['API_KEY']!});
 
       result = await net.perform();
 
@@ -54,7 +53,7 @@ class HomeServiceImpl implements HomeService {
         url: URL.CONVERT_CURRENCY,
         method: NetMethod.GET,
         queryParam: {
-          'apikey': AppConst.API_KEY,
+          'apikey': dotenv.env['API_KEY']!,
           'base_currency': baseCurrency,
           'currencies': convertCurrencyCodes.join(',')
         },

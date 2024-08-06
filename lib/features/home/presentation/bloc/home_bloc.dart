@@ -80,7 +80,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     List<String> selectedCurrency = (state as HomeSuccess).selectedCurrencyCode;
     selectedCurrency.remove(event.currencyCode);
 
-    print(selectedCurrency);
     emit(
       HomeSuccess(
           currencyList: (state as HomeSuccess).currencyList,
